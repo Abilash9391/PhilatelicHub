@@ -1,13 +1,22 @@
 import { React, useContext, useState } from "react";
 import { ProductContext } from "../Context/ProductContext.jsx";
 import { IoMdSearch } from "react-icons/io";
+import ButtonGreen from "../Components/Button/ButtonGreen.jsx";
 import Shoppage from "../Components/Product/Shoppage.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Product = () => {
   const { products } = useContext(ProductContext);
   const [search, setSearch] = useState("");
+  const navigate= useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 9;
+
+
+  const handleSell=()=>{
+    console.log("Sell button clicked");
+    navigate("/sell");
+  }
 
   const filteredProducts = products.filter((product) => {
     if (search === "") {
@@ -54,6 +63,14 @@ const Product = () => {
               }}
             />
           </label>
+            <ButtonGreen 
+            onClick={handleSell}
+            Text_Color={"white"}
+            Font={"raleway"}
+            Padding_Y={"16px"}
+            Padding_X={"32px"}
+            Text={"Sell"}
+                  />
         </div>
 
         <div className="mt-10 grid grid-cols-1 justify-items-center gap-3 md:grid-cols-2 lg:grid-cols-3">

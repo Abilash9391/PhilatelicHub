@@ -112,7 +112,7 @@ const Community = () => {
         <div className="space-y-4">
           {posts.map((post,i) => (
             <motion.div 
-              key={post.id} 
+              key={i} 
               initial={{ opacity: 0, y: 20 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.3 }}

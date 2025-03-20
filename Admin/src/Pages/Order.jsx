@@ -13,7 +13,7 @@ const Order = ({}) => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.post(`${URL}/api/order/listorder`);
+      const response = await axios.get(`${URL}/api/order/listorder`);
       if (response.data.success) {
         setOrders(response.data.data);
       } else {

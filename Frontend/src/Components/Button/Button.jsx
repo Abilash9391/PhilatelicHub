@@ -1,10 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const Button = ({ Text, Text_Color, Font, Padding_X, Padding_Y }) => {
+const Button = ({ onClick,Text, Text_Color, Font, Padding_X, Padding_Y }) => {
   return (
     <>
       <motion.button
+        onClick={onClick}
         initial={{ "--x": "100%", scale: 1 }}
         animate={{ "--x": "-100%" }}
         whileTap={{ scale: 0.97 }}

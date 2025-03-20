@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/placeorder", authMiddlewear, placeOrder);
 router.post("/verify", verifyOrder);
 router.get("/orders/:userId", authMiddlewear, userOrders);
-router.post("/listorder", listOrders);
+router.get("/listorder", listOrders);
 router.get("/getstatus/:id",getStatus);
 router.post("/status", updateStatus);
 router.get("/:id",authMiddlewear,getOrder);

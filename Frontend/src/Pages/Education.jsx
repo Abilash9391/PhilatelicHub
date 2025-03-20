@@ -2,9 +2,10 @@ import React from "react";
 
 const Education = () => {
   return (
-    <div className="container mx-auto py-10 px-5">
+    <div className="h-full w-full bg-[url('/img/home.png')] bg-cover bg-center">
+    <div className="container mx-auto py-10 px-5 ">
       {/* Page Title */}
-      <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+      <h2 className="text-3xl font-bold text-center mb-6 text-white">
         Philatelic Education
       </h2>
       <p className="text-lg text-center mb-8 text-gray-700">
@@ -14,11 +15,11 @@ const Education = () => {
       {/* Educational Cards */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Card 1: Stamp History */}
-        <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-          <h3 className="text-xl font-semibold mb-3 text-gray-800">
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+          <h3 className="text-xl font-semibold mb-3 text-white">
             Stamp History & Evolution
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-white mb-4">
             Learn about the origins of postage stamps and how they have evolved over time.
           </p>
           <a
@@ -32,11 +33,11 @@ const Education = () => {
         </div>
 
         {/* Card 2: Collecting Tips */}
-        <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-          <h3 className="text-xl font-semibold mb-3 text-gray-800">
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+          <h3 className="text-xl font-semibold mb-3 text-white">
             Stamp Collecting Tips
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-white mb-4">
             Discover expert advice on starting and maintaining a valuable collection.
           </p>
           <a
@@ -107,6 +108,7 @@ const Education = () => {
           </li>
         </ul>
       </div>
+    </div>
     </div>
   );
 };

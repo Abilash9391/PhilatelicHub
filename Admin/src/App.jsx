@@ -7,6 +7,7 @@ import AddCart from "./Pages/AddCart";
 import ListCart from "./Pages/ListCart";
 import Order from "./Pages/Order";
 import Navbar from "./Components/Navbar";
+import VerifyProduct from "./Pages/VerifyProduct";
 import { AnimatePresence } from "framer-motion";
 import Menubar from "./Components/Menubar";
 
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/" element={<AddCart />} />
                 <Route path="/list" element={<ListCart />} />
                 <Route path="/order" element={<Order />} />
+                <Route path="/verifyproduct" element={<VerifyProduct/>}/>
               </Routes>
             </div>
           </div>

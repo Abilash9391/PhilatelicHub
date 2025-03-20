@@ -10,6 +10,7 @@ import NewCollection from "./Pages/NewCollection";
 import Product from "./Pages/Product";
 import ProductDetails from "./Pages/ProductDetails";
 import SignUp from "./Pages/SignUp";
+import VerifyProducts from "./Pages/VerifyProducts";
 import Login from "./Pages/Login";
 // import UserProfile from "./Pages/Profile";
 import Cart from "./Pages/Cart";
@@ -17,6 +18,8 @@ import Order from "./Pages/Order";
 import Verify from "./Pages/Verify";
 import Community from "./Pages/Community";
 import UserOrders from "./Pages/UserOrders";
+import New from "./Pages/New";
+import Sell from "./Pages/Sell";
 import Education from "./Pages/Education";
 import Layout from "./Layout/layout";
 import OrderConfirmation from "./Pages/OrderConfirmation";
@@ -82,6 +85,9 @@ function App() {
               }
             />
             <Route
+              path="/userproducts/:id"
+              element={<VerifyProducts/>}/>
+            <Route
               path="/newcollection"
               element={
                 <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
@@ -98,6 +104,18 @@ function App() {
               }
             />
             <Route
+              path="/addproduct"
+              element={
+                <New/>
+              }
+            />
+            <Route
+              path="/sell"
+              element={
+                <Sell/>
+              }
+              />
+            <Route
               path="/community"
               element={
                 <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
@@ -106,7 +124,7 @@ function App() {
               }
             />
             <Route
-              path="/education" // ✅ Added Education Route
+              path="/education"
               element={
                 <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
                   <Education />

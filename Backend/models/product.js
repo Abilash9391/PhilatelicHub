@@ -9,9 +9,12 @@ const productSchema = new mongoose.Schema(
   price: { type: Number, required: true },
   imageFile: { type: String, required: false },
   inStock: { type: Boolean, required: true },
-  newCollection: { type: Boolean, required: true },
+  newCollection: { type: Boolean },
   features: { type: String, required: true },
   color: { type: String, required: true },
+  verified:{type: String},
+  userId:{type: String},
+  quantity:{type:Number}
 });
 
 const productModel =

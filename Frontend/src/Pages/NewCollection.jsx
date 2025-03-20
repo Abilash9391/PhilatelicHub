@@ -6,8 +6,8 @@ const NewCollection = () => {
   const { products } = useContext(ProductContext);
   const newCollection = products.filter((product) => product.newCollection);
   return (
-    <div className="bg-tetiary pb-8">
-      <h1 className="flex items-center justify-center py-8 font-raleway text-2xl uppercase tracking-widest text-background md:text-4xl">
+    <div className="bg-tetiary pb-8 h-full w-full bg-[url('/img/home.png')] bg-cover bg-center" >
+      <h1 className="flex items-center justify-center py-8 font-raleway text-2xl uppercase tracking-widest text-white text-background md:text-4xl">
         New Collection
       </h1>
       <div className="container grid grid-cols-1 justify-items-center gap-10 md:grid-cols-2">

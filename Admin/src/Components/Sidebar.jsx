@@ -4,14 +4,15 @@ import { motion, spring } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
 import { BiChevronLeft } from "react-icons/bi";
-import { GiWatch } from "react-icons/gi";
-import { FaList, FaBorderAll } from "react-icons/fa";
+import { FaList, FaBorderAll, FaClipboardCheck} from "react-icons/fa";
 
 const Sidebar = () => {
   const sidebar = [
     { id: 1, name: "Add Product", link: "/", icon: IoMdAdd },
     { id: 2, name: "List Product", link: "/list", icon: FaList },
     { id: 3, name: "Orders", link: "/order", icon: FaBorderAll },
+    { id: 4, name: "VerifyProducts", link: "/verifyproduct", icon: FaClipboardCheck},
+    
   ];
   const [activeTab, setActiveTab] = useState(sidebar[0].id);
   const [toggle, setToggle] = useState(true);

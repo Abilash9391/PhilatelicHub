@@ -21,6 +21,7 @@ const AddCart = () => {
     category: "Luxury Watches",
     imageFile: null,
     color: "",
+    quantity:"",
     features: "",
     inStock: false,
     newCollection: false,
@@ -108,6 +109,7 @@ try{
         imageFile: null,
         color: "",
         features: "",
+        quantity:"",
         inStock: false,
         newCollection: false,
       });
@@ -177,6 +179,17 @@ try{
                 type="text"
                 name="brand"
                 placeholder="Type Brand Name Here"
+                className="productsmall"
+              />
+            </div>
+            <div>
+              <p className="subheader">Quantity</p>
+              <input
+                onChange={onChangeHandler}
+                value={data.quantity}
+                type="number"
+                name="quantity"
+                placeholder="Quantity"
                 className="productsmall"
               />
             </div>
@@ -253,11 +266,12 @@ try{
                   name="category"
                   className="w-40 rounded-full bg-secondary px-3 py-1 font-lora text-white outline-none"
                 >
-                  <option value="Luxury Watches">Revenue Stamps</option>
-                  <option value="Sport Watches">Postal Stamps</option>
-                  <option value="Smart Watches">Hundi Stamps</option>
-                  <option value="Vintage Watches">Foreign Exchange Stamps</option>
-                  <option value="Watch Acessories">Customs Stamps</option>
+                  <option value="">Select a category</option>
+                <option value="Revenue Stamps">Revenue Stamps</option>
+                  <option value="Postal Stamps">Postal Stamps</option>
+                  <option value="Hundi Stamps">Hundi Stamps</option>
+                  <option value="Foreign Exchange Stamps">Foreign Exchange Stamps</option>
+                  <option value="Customs Stamps">Customs Stamps</option>
                 </select>
               </div>
               <div>

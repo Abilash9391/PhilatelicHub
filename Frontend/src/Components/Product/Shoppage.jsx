@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 
 const Shoppage = ({ updateproducts }) => {
   const [hover, setHover] = useState(false);
-  const { name, price, imageFile, inStock, newCollection, _id } =
+  const { name, price, imageFile, inStock, newCollection, _id,quantity } =
     updateproducts;
   const onHover = () => {
     setHover(!hover);
@@ -42,6 +42,7 @@ const Shoppage = ({ updateproducts }) => {
             <div className="flex flex-col gap-2 pt-1">
               <p className="font-raleway text-lg text-white">{name}</p>
               <p className="font-raleway text-white">${price}</p>
+              <p className="font-raleway text-white">{quantity}</p>
               {inStock ? (
                 <p className="font-raleway text-green-500">In Stock</p>
               ) : (
@@ -63,7 +64,10 @@ const Shoppage = ({ updateproducts }) => {
                 ) : (
                   <div className="flex h-10 items-center justify-between gap-2 rounded-full bg-secondary md:w-24 lg:w-32">
                     <FaMinus
-                      onClick={() => removeFromCart(_id)}
+                      onClick={() => {
+                        
+                        removeFromCart(_id);
+                      }}
                       className="ml-1 h-6 w-6 cursor-pointer rounded-full bg-red-500 p-1 text-white"
                     />
                     <p className="font-libre text-white">{cartItems[_id]}</p>
