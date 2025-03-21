@@ -42,7 +42,7 @@ const Shoppage = ({ updateproducts }) => {
             <div className="flex flex-col gap-2 pt-1">
               <p className="font-raleway text-lg text-white">{name}</p>
               <p className="font-raleway text-white">${price}</p>
-              <p className="font-raleway text-white">{quantity}</p>
+              <p className="font-raleway text-white">Quantity: {quantity}</p>
               {inStock ? (
                 <p className="font-raleway text-green-500">In Stock</p>
               ) : (

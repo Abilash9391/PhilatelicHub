@@ -8,91 +8,137 @@ const environment = new paypal.core.SandboxEnvironment(process.env.PAYPAL_CLIENT
 const client = new paypal.core.PayPalHttpClient(environment);
 
 export const placeOrder = async (req, res) => {
-    const { items } = req.body;
-    // console.log(req.body);
-    try {
-        const newOrder = new orderModel({
-            userId: req.body.id,
-            name: req.body.name,
-            email: req.body.email,
-            number: req.body.number,
-            address: req.body.address,
-            items: items,
-            amount: req.body.amount,
-        });
-
-        await newOrder.save();
-        await userModel.findByIdAndUpdate(req.body.id, { cartData: {} });
-
-        const line_items = items.map((item) => ({
-            price_data: {
-                currency: "usd",
-                product_data: {
-                    name: item.name,
-                },
-                unit_amount: item.price * 100,
-            },
-            quantity: item.quantity,
-        }));
-
-        line_items.push({
-            price_data: {
-                currency: "usd",
-                product_data: {
-                    name: "Delivery Charges",
-                },
-                unit_amount: 2 * 100,
-            },
-            quantity: 1,
-        });
-
-        const request = new paypal.orders.OrdersCreateRequest();
-        request.requestBody({
-            intent: 'CAPTURE',
-            purchase_units: [{
-                amount: {
-                    currency_code: 'USD',
-                    value: req.body.amount.toFixed(2),
-                    breakdown: {
-                        item_total: {
-                            currency_code: 'USD',
-                            value: req.body.amount.toFixed(2)
-                        }
-                    }
-                },
-                items: line_items.map(item => ({
-                    name: item.price_data.product_data.name,
-                    unit_amount: {
-                        currency_code: 'USD',
-                        value: (item.price_data.unit_amount / 100).toFixed(2)
-                    },
-                    quantity: item.quantity
-                }))
-            }],
-            application_context: {
-                return_url: `http://localhost:5174/verify`,
-                cancel_url: `http://localhost:5174/payment-cancelled`
-            }
-        });
-
-        const order = await client.execute(request);
-        console.log(order);
-        const paypalOrderId= order.result.id;
-        const approvalLink = order.result.links.find(link => link.rel === 'approve')?.href;
-
-        if (!approvalLink) {
-            return res.json({ success: false, message: "PayPal approval URL not found" });
-        }
-        // const orderId=newOrder._id;
-        
-
-        res.json({ success: true, approval_url: approvalLink ,paypalOrderId:paypalOrderId,orderId:newOrder._id});
-    } catch (error) {
-        console.error(error);
-        
-        res.status(500).json({ success: false, message: error.message});
+  const { name, email, number, address, items, amount } = req.body;
+  try {
+    // Validate that all items have sufficient stock
+    for (const item of items) {
+      const product = await productModel.findById(item._id);
+      if (!product) {
+        return res.json({ success: false, message: `Product ${item.name} not found` });
+      }
+      if (product.quantity < item.quantity) {
+        return res.json({ success: false, message: `Insufficient stock for ${item.name}` });
+      }
     }
+
+    // Create the order (assuming an orderModel exists)
+    const newOrder = new orderModel({
+      name,
+      email,
+      number,
+      address,
+      items,
+      amount,
+      status: "Pending", // Example field
+    });
+    await newOrder.save();
+
+    // Update product quantities and inStock status
+    for (const item of items) {
+      const product = await productModel.findById(item._id);
+      product.quantity -= item.quantity; // Decrease quantity
+      if (product.quantity <= 0) { // Check if quantity is 0 or negative
+        product.inStock = false; // Set inStock to false
+      }
+      await product.save();
+    }
+
+    res.json({ success: true, message: "Order placed successfully" });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to place order",
+      error: error.message,
+    });
+  }
 };
+
+// export const placeOrder = async (req, res) => {
+//     const { items } = req.body;
+//     // console.log(req.body);
+//     try {
+//         const newOrder = new orderModel({
+//             userId: req.body.id,
+//             name: req.body.name,
+//             email: req.body.email,
+//             number: req.body.number,
+//             address: req.body.address,
+//             items: items,
+//             amount: req.body.amount,
+//         });
+
+//         await newOrder.save();
+//         await userModel.findByIdAndUpdate(req.body.id, { cartData: {} });
+
+//         const line_items = items.map((item) => ({
+//             price_data: {
+//                 currency: "usd",
+//                 product_data: {
+//                     name: item.name,
+//                 },
+//                 unit_amount: item.price * 100,
+//             },
+//             quantity: item.quantity,
+//         }));
+
+//         line_items.push({
+//             price_data: {
+//                 currency: "usd",
+//                 product_data: {
+//                     name: "Delivery Charges",
+//                 },
+//                 unit_amount: 2 * 100,
+//             },
+//             quantity: 1,
+//         });
+
+//         const request = new paypal.orders.OrdersCreateRequest();
+//         request.requestBody({
+//             intent: 'CAPTURE',
+//             purchase_units: [{
+//                 amount: {
+//                     currency_code: 'USD',
+//                     value: req.body.amount.toFixed(2),
+//                     breakdown: {
+//                         item_total: {
+//                             currency_code: 'USD',
+//                             value: req.body.amount.toFixed(2)
+//                         }
+//                     }
+//                 },
+//                 items: line_items.map(item => ({
+//                     name: item.price_data.product_data.name,
+//                     unit_amount: {
+//                         currency_code: 'USD',
+//                         value: (item.price_data.unit_amount / 100).toFixed(2)
+//                     },
+//                     quantity: item.quantity
+//                 }))
+//             }],
+//             application_context: {
+//                 return_url: `http://localhost:5174/verify`,
+//                 cancel_url: `http://localhost:5174/payment-cancelled`
+//             }
+//         });
+
+//         const order = await client.execute(request);
+//         console.log(order);
+//         const paypalOrderId= order.result.id;
+//         const approvalLink = order.result.links.find(link => link.rel === 'approve')?.href;
+
+//         if (!approvalLink) {
+//             return res.json({ success: false, message: "PayPal approval URL not found" });
+//         }
+//         // const orderId=newOrder._id;
+        
+
+//         res.json({ success: true, approval_url: approvalLink ,paypalOrderId:paypalOrderId,orderId:newOrder._id});
+//     } catch (error) {
+//         console.error(error);
+        
+//         res.status(500).json({ success: false, message: error.message});
+//     }
+// };
 
 export const verifyOrder = async (req, res) => {
     try {

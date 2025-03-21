@@ -94,6 +94,7 @@ export const ProductProvider = ({ children }) => {
     const fetchProduct = async () => {
       const response = await axios.get(`${URL}/api/product/list`);
       if (response.data.success) {
+        console.log(response.data.data);
         setProducts(response.data.data);
         setLoading(false);
       } else {
